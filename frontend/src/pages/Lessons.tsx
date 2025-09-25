@@ -14,7 +14,7 @@ const Lessons: React.FC = () => {
   const [lessons, setLessons] = useState<Lesson[]>([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/lessons/")
+    fetch(`${import.meta.env.VITE_API_URL}/lessons/`)
       .then((res) => res.json())
       .then((data) => setLessons(data))
       .catch((err) => console.error("Erro ao buscar lessons:", err));

@@ -17,7 +17,7 @@ const Dashboard: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/clients/report/all")
+    fetch(`${import.meta.env.VITE_API_URL}/clients/report/all`)
       .then((res) => res.json())
       .then((data) => setReport(data))
       .catch((err) => console.error("Erro ao carregar relatório:", err));

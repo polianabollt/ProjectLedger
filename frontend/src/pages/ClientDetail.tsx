@@ -26,12 +26,12 @@ const ClientDetail: React.FC = () => {
 
   useEffect(() => {
     // resumo do cliente
-    fetch(`http://127.0.0.1:8000/clients/${id}/report`)
+    fetch(`${import.meta.env.VITE_API_URL}clients/${id}/report`)
       .then((res) => res.json())
       .then(setReport);
 
     // cursos do cliente
-    fetch(`http://127.0.0.1:8000/clients/${id}/courses`)
+    fetch(`${import.meta.env.VITE_API_URL}/clients/${id}/courses`)
       .then((res) => res.json())
       .then(setCourses);
   }, [id]);

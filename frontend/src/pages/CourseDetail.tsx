@@ -46,7 +46,7 @@ const CourseDetail: React.FC = () => {
   const fetchLessons = () => {
     if (!id) return;
 
-    fetch(`http://127.0.0.1:8000/courses/${id}/lessons`)
+    fetch(`${import.meta.env.VITE_API_URL}/courses/${id}/lessons`)
       .then((res) => res.json())
       .then((data) => setLessons(data));
   };
@@ -54,7 +54,7 @@ const CourseDetail: React.FC = () => {
   useEffect(() => {
     if (!id) return;
 
-    fetch(`http://127.0.0.1:8000/courses/`)
+    fetch(`${import.meta.env.VITE_API_URL}/courses/`)
       .then((res) => res.json())
       .then((data) => {
         const course = data.find((c: any) => c.id === Number(id));
@@ -63,7 +63,7 @@ const CourseDetail: React.FC = () => {
 
     fetchLessons();
 
-    fetch("http://127.0.0.1:8000/types/")
+    fetch(`${import.meta.env.VITE_API_URL}/types/`)
       .then((res) => res.json())
       .then((data) => setTypes(data));
   }, [id]);
@@ -71,7 +71,7 @@ const CourseDetail: React.FC = () => {
   const addLesson = async (values: any) => {
     if (!id) return;
 
-    const res = await fetch("http://127.0.0.1:8000/lessons/", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/lessons/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -90,7 +90,7 @@ const CourseDetail: React.FC = () => {
   };
 
   const deleteLesson = async (lessonId: number) => {
-    const res = await fetch(`http://127.0.0.1:8000/lessons/${lessonId}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/lessons/${lessonId}`, {
       method: "DELETE",
     });
 
@@ -110,7 +110,7 @@ const CourseDetail: React.FC = () => {
     if (!editingLesson) return;
 
     const values = await form.validateFields();
-    const res = await fetch(`http://127.0.0.1:8000/lessons/${editingLesson.id}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/lessons/${editingLesson.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
