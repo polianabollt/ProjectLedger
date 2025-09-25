@@ -12,7 +12,7 @@ const Clients: React.FC = () => {
 
   const fetchClients = async () => {
     setLoading(true);
-    const res = await fetch("http://127.0.0.1:8000/clients/");
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/clients/`);
     const data = await res.json();
     setClients(data);
     setLoading(false);
@@ -21,7 +21,7 @@ const Clients: React.FC = () => {
   useEffect(() => { fetchClients(); }, []);
 
   const addClient = async (values: { name: string }) => {
-    const res = await fetch("http://127.0.0.1:8000/clients/", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/clients/`, {
       method: "POST", headers: {"Content-Type": "application/json"},
       body: JSON.stringify(values)
     });
@@ -29,7 +29,7 @@ const Clients: React.FC = () => {
   };
 
   const deleteClient = async (id: number) => {
-    const res = await fetch(`http://127.0.0.1:8000/clients/${id}`, { method: "DELETE" });
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/clients/${id}`, { method: "DELETE" });
     if (res.ok) { message.success("Cliente excluído"); fetchClients(); }
   };
 
