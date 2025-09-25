@@ -20,9 +20,10 @@ const { Option } = Select;
 type LessonType = {
   id: number;
   name: string;
-  unit_type: "hour" | "unit";
+  unit_type: "hour" | "unit" | "minute" | "page" | "daily";
   value: number;
 };
+
 
 const Types: React.FC = () => {
   const [types, setTypes] = useState<LessonType[]>([]);
@@ -94,7 +95,17 @@ const Types: React.FC = () => {
       title: "Telas",
       dataIndex: "unit_type",
       key: "unit_type",
-      render: (v: "hour" | "unit") => (v === "hour" ? "Hora" : "Telas"),
+      render: (v: LessonType["unit_type"]) => {
+            switch (v) {
+              case "hour": return "Hora";
+              case "unit": return "Telas";
+              case "minute": return "Minuto";
+              case "page": return "Página";
+              case "daily": return "Diária";
+              default: return v;
+            }
+          },
+
     },
     {
       title: "Valor (R$)",
@@ -146,8 +157,12 @@ const Types: React.FC = () => {
             <Select style={{ width: 160 }}>
               <Option value="hour">Por Hora</Option>
               <Option value="unit">Por Telas</Option>
+              <Option value="minute">Por Minuto</Option>
+              <Option value="page">Por Página</Option>
+              <Option value="daily">Por Diária</Option>
             </Select>
           </Form.Item>
+
 
           <Form.Item
             name="value"
@@ -187,8 +202,12 @@ const Types: React.FC = () => {
             <Select>
               <Option value="hour">Por Hora</Option>
               <Option value="unit">Por Telas</Option>
+              <Option value="minute">Por Minuto</Option>
+              <Option value="page">Por Página</Option>
+              <Option value="daily">Por Diária</Option>
             </Select>
           </Form.Item>
+
           <Form.Item
             name="value"
             label="Valor (R$)"
