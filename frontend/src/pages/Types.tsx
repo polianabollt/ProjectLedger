@@ -166,13 +166,20 @@ const Types: React.FC = () => {
 
           <Form.Item
             name="value"
-            rules={[{ required: true, message: "Digite o valor" }]}
+            label="Valor (R$)"
+            rules={[{ required: true, message: "Informe o valor" }]}
           >
-            <InputNumber
-              placeholder="Valor"
+           <InputNumber<number>
               min={0}
               step={0.01}
-              style={{ width: 120 }}
+              style={{ width: "100%" }}
+              decimalSeparator=","
+              formatter={(value) =>
+                value ? `R$ ${value}`.replace(".", ",") : ""
+              }
+              parser={(value) =>
+                value ? parseFloat(value.replace("R$ ", "").replace(",", ".")) : 0
+              }
             />
           </Form.Item>
 
