@@ -30,13 +30,13 @@ const Courses: React.FC = () => {
   const navigate = useNavigate();
 
   const fetchCourses = async () => {
-    const res = await fetch("http://127.0.0.1:8000/courses/");
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/courses/`);
     const data = await res.json();
     setCourses(data);
   };
 
   const fetchClients = async () => {
-    const res = await fetch("http://127.0.0.1:8000/clients/");
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/clients/`);
     const data = await res.json();
     setClients(data);
   };
@@ -47,7 +47,7 @@ const Courses: React.FC = () => {
   }, []);
 
   const deleteCourse = async (id: number) => {
-    await fetch(`http://127.0.0.1:8000/courses/${id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/courses/${id}`, {
       method: "DELETE",
     });
     message.success("Curso excluído!");
@@ -57,7 +57,7 @@ const Courses: React.FC = () => {
   const onFinish = async (values: any) => {
     setLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/courses/", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/courses/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
