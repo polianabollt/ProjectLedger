@@ -31,7 +31,7 @@ const Types: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   const fetchTypes = () => {
-    fetch("http://127.0.0.1:8000/types/")
+    fetch(`${import.meta.env.VITE_API_URL}/types/`)
       .then((res) => res.json())
       .then((data) => setTypes(data))
       .catch((err) => console.error("Erro ao buscar types:", err));
@@ -42,7 +42,7 @@ const Types: React.FC = () => {
   }, []);
 
   const addType = async (values: any) => {
-    const res = await fetch("http://127.0.0.1:8000/types/", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/types/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
@@ -55,7 +55,7 @@ const Types: React.FC = () => {
   };
 
   const deleteType = async (id: number) => {
-    const res = await fetch(`http://127.0.0.1:8000/types/${id}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/types/${id}`, {
       method: "DELETE",
     });
 
@@ -75,7 +75,7 @@ const Types: React.FC = () => {
     if (!editingType) return;
 
     const values = await form.validateFields();
-    const res = await fetch(`http://127.0.0.1:8000/types/${editingType.id}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/types/${editingType.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
@@ -189,9 +189,25 @@ const Types: React.FC = () => {
               <Option value="unit">Por Telas</Option>
             </Select>
           </Form.Item>
-          <Form.Item name="value" label="Valor (R$)" rules={[{ required: true }]}>
-            <InputNumber min={0} step={0.01} style={{ width: "100%" }} />
+          <Form.Item
+            name="value"
+            label="Valor (R$)"
+            rules={[{ required: true, message: "Informe o valor" }]}
+          >
+            <InputNumber
+              min={0}
+              step={0.01}
+              style={{ width: "100%" }}
+              decimalSeparator=","
+              formatter={(value) =>
+                value ? `R$ ${value}`.replace(".", ",") : ""
+              }
+              parser={(value) =>
+                value ? value.replace("R$ ", "").replace(",", ".") : ""
+              }
+            />
           </Form.Item>
+
         </Form>
       </Modal>
     </div>
